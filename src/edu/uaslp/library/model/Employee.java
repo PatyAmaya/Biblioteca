@@ -1,6 +1,6 @@
 package edu.uaslp.library.model;
 
-public class Employ {
+public class Employee {
     private String name;
     private String code;
 

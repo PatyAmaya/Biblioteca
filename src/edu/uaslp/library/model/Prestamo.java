@@ -6,9 +6,12 @@ public class Prestamo {
     private LocalDateTime fechaHora;
     private User usuario;
     private Book libro;
-    private Employ empleado;
+    private Employee empleado;
 
     //methods
+
+
+
     //Setters
 
     public void setFechaHora(LocalDateTime fechaHora) {
@@ -23,7 +26,7 @@ public class Prestamo {
         this.libro = libro;
     }
 
-    public void setEmpleado(Employ empleado) {
+    public void setEmpleado(Employee empleado) {
         this.empleado = empleado;
     }
 
@@ -41,7 +44,7 @@ public class Prestamo {
         return libro;
     }
 
-    public Employ getEmpleado() {
+    public Employee getEmpleado() {
         return empleado;
     }
 
