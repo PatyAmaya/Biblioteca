@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 import javax.swing.*;
+import java.io.*;
 
 import edu.uaslp.library.model.*;
 import edu.uaslp.library.service.*;
@@ -11,19 +12,20 @@ import edu.uaslp.library.service.*;
 public class AppWindow {
     private static final int WIDTH = 700;
     private static final int HEIGHT = 600;
-    private JLabel bookNameLabel = new JLabel("Aqui va el nombre",SwingConstants.LEFT);
-    private String clave;
-    private JLabel studentNameLabel = new JLabel("Aqui va el nombre", SwingConstants.LEFT);
-    //String nombreLibro = bookNameLabel.getText();
+    private JLabel bookNameLabel = new JLabel("<Nombre del libro>", SwingConstants.LEFT);
+    private JLabel studentNameLabel = new JLabel("<Nombre del usuario>", SwingConstants.LEFT);
     UserManager administradorDeUsuarios = new UserManager();
+    BookManager administradorDeLibros = new BookManager();
     User usuario = new User();
-    String[] data = new String[4];
-    private int cont=0;
-    JList<String> list = new JList<>(data); //data has type Object[]
-
-   /* User usuario = new User();
     Book libro = new Book();
-    UserManager administradorDeUsuarios = new UserManager();*/
+    JTextField studentKey = new JTextField();
+    JTextField bookKey = new JTextField();
+    String claveUsuario;
+    String claveLibro;
+
+    String[] data = new String[4];
+    private int cont = 0;
+    JList<String> list = new JList<>(data); //data has type Object[]
 
     public void show() {
         JFrame frame = new JFrame("JFrame Example");
@@ -96,7 +98,6 @@ public class AppWindow {
         constraints.gridy = 0;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 1;
-        JTextField bookKey = new JTextField();
 
         constraints.gridx = 0;
         firstRow.add(labelBookKey, constraints);
@@ -120,8 +121,6 @@ public class AppWindow {
         constraints.gridx = 0;
         secondRow.add(bookLabel, constraints);
 
-        //MUESTRA NOMBRE DEL LIBRO
-        //bookNameLabel = new JLabel("Titulo: ", SwingConstants.LEFT);
         constraints.gridx = 1;
         secondRow.add(bookNameLabel, constraints);
 
@@ -145,10 +144,9 @@ public class AppWindow {
         firstRow.add(label, constraints);
 
         //CAPTURA CLAVE DEL USUARIO en studentkey de JTEXTFIELD
-        JTextField studentKey = new JTextField();
+
         constraints.gridx = 1;
         firstRow.add(studentKey, constraints);
-        this.clave = studentKey.getText();
 
         JButton buttonQuery = new JButton("Consultar");
         constraints.gridx = 2;
@@ -161,8 +159,6 @@ public class AppWindow {
         JLabel studentLabel = new JLabel("Alumno:");
         secondRow.add(studentLabel, constraints);
 
-        //studentNameLabel = new JLabel("Aqui va el nombre", SwingConstants.LEFT);
-       // studentNameLabel.setText("Aqui va el nombre");
         constraints.gridx = 1;
         secondRow.add(studentNameLabel, constraints);
 
@@ -180,11 +176,12 @@ public class AppWindow {
     private void queryStudent(ActionEvent event) {
         JOptionPane.showMessageDialog(null, "Consultando estudiante");
 
-        usuario=administradorDeUsuarios.dameUsuarioPorClave("11111");
-        if(usuario!=null){
+        String claveUsuario = studentKey.getText();
+        usuario = administradorDeUsuarios.dameUsuarioPorClave(claveUsuario);
+        if (usuario != null) {
             JOptionPane.showMessageDialog(null, "Usuario encontrado");
             studentNameLabel.setText(usuario.getName());
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Usuario no encontrado");
         }
     }
@@ -192,33 +189,35 @@ public class AppWindow {
     private void addBookToLoan(ActionEvent event) {
         JOptionPane.showMessageDialog(null, "Añadiendo Libro");
 
-        data[cont] = "titulo";
-
+        data[cont] = libro.getTitle();
+        list.updateUI();
         cont++;
-        System.out.println(cont);
-
     }
 
     private void queryBook(ActionEvent event) {
         JOptionPane.showMessageDialog(null, "Consultando Libro");
-        BookManager administradorDeLibros = new BookManager();
-        Book libro = new Book();
-        libro=administradorDeLibros.dameLibroPorClave("123");
-        if(libro!=null)
-        {
+
+        String claveLibro = bookKey.getText();
+        libro = administradorDeLibros.dameLibroPorClave(claveLibro);
+        if (libro != null) {
             JOptionPane.showMessageDialog(null, "Libro encontrado");
             bookNameLabel.setText(libro.getTitle());
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Libro no encontrado");
         }
     }
 
     private void performLoan(ActionEvent event) {
-        if(cont==1)
-        {
-            JOptionPane.showMessageDialog(null, "Se prestó "+ cont+" libro a "+usuario.getName());
-        }else{
-            JOptionPane.showMessageDialog(null, "Se prestaron "+ cont+" libros a "+usuario.getName());
+        if (usuario == null) {
+            JOptionPane.showMessageDialog(null, "Ingrese usuario válido");
+            return;
+        }
+        if (cont == 1) {
+            JOptionPane.showMessageDialog(null, "Se prestó " + cont + " libro a " + usuario.getName());
+        } else if (cont == 0) {
+            JOptionPane.showMessageDialog(null, "No se prestaron libros a " + usuario.getName());
+        } else {
+            JOptionPane.showMessageDialog(null, "Se prestaron " + cont + " libros a " + usuario.getName());
         }
 
     }

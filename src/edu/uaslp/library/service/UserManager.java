@@ -19,17 +19,16 @@ public class UserManager {
     }
 
     public UserManager(){
-        usuarios.put("11111", createUsuario("140121","Ricardo"));
-        usuarios.put("220521", createUsuario("322224", "Betty"));
-        usuarios.put("121234", createUsuario("121234","Armando"));
-        usuarios.put("654663", createUsuario("654663","Marcela"));
-        usuarios.put("867574", createUsuario("867574","Patricia"));
-        usuarios.put("624546", createUsuario("624546","Mario"));
-        usuarios.put("968857", createUsuario("968857","Nicolas"));
-        usuarios.put("424265", createUsuario("424265","Inesita"));
-        usuarios.put("875735", createUsuario("875735","Freddy"));
-        usuarios.put("254456", createUsuario("254456","Maria"));
-        usuarios.put("986653", createUsuario("986653","Julia"));
+        usuarios.put("12345", createUsuario("1","Ricardo"));
+        usuarios.put("23456", createUsuario("2", "Betty"));
+        usuarios.put("34567", createUsuario("3","Armando"));
+        usuarios.put("45678", createUsuario("4","Marcela"));
+        usuarios.put("56789", createUsuario("5","Patricia"));
+        usuarios.put("67890", createUsuario("6","Mario"));
+        usuarios.put("78901", createUsuario("7","Nicolas"));
+        usuarios.put("89012", createUsuario("8","Catalina"));
+        usuarios.put("90123", createUsuario("9","Freddy"));
+        usuarios.put("01234", createUsuario("254456","Hugo"));
     }
 
 
